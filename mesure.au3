@@ -66,7 +66,11 @@ Func Draging($hWnd, $nMsg, $wParam, $lParam)
 	If Not $g_StartSearch Then Return 1
 	$pos = MouseGetPos()
     if $status = 1 Then GUICtrlSetData($Label11, "第一个点的坐标:"&$pos[0]&","&$pos[1])
-    if $status = 2 Then GUICtrlSetData($Label12, "第二个点的坐标:"&$pos[0]&","&$pos[1])
+    if $status = 2 Then 
+        GUICtrlSetData($Label12, "第二个点的坐标:"&$pos[0]&","&$pos[1])
+        $dis = sqrt(($point1[0]-$pos[0])^2 +($point1[1]-$pos[1])^2)
+        GUICtrlSetData($Label13, "两点间距离是:"&Floor($dis))
+    EndIf
 EndFunc   ;==>Draging
 
 Func StopDrag($hWnd, $nMsg, $wParam, $lParam)
@@ -102,6 +106,8 @@ EndFunc
 
 Func ClearPoint()
     _GUICtrlListBox_ResetContent($List2)
+    $point1 = 0
+    $status = 0
     GUICtrlSetData($Label11, "第一个点的坐标:")
     GUICtrlSetData($Label12, "第二个点的坐标:")
     GUICtrlSetData($Label13, "两点间距离是:")
